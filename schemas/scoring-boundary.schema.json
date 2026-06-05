@@ -1,0 +1,603 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://example.org/schemas/royalty-os-v0.3/scoring-boundary.schema.json",
+"title": "Royalty OS v0.3 Scoring Boundary",
+"description": "Schema for validating a Royalty OS v0.3 Scoring Boundary. The Scoring Boundary defines which scores may support review and which scores are prohibited because they would create unsafe automated judgment.",
+"type": "object",
+"required": [
+"scoring_boundary"
+],
+"additionalProperties": false,
+"properties": {
+"scoring_boundary": {
+"type": "object",
+"required": [
+"id",
+"version",
+"purpose",
+"allowed_fields",
+"prohibited_fields",
+"boundary_rules",
+"execution_boundary"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"version": {
+"type": "string",
+"examples": [
+"0.3.0-draft"
+]
+},
+"purpose": {
+"type": "string",
+"enum": [
+"review_support_only"
+]
+},
+"description": {
+"type": "string"
+},
+"allowed_fields": {
+"type": "array",
+"description": "Scoring fields allowed in v0.3 for review support.",
+"items": {
+"$ref": "#/$defs/allowed_scoring_field"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"prohibited_fields": {
+"type": "array",
+"description": "Scoring fields prohibited in v0.3 because they would create unsafe automated judgment.",
+"items": {
+"$ref": "#/$defs/prohibited_scoring_field"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"allowed_scoring": {
+"$ref": "#/$defs/allowed_scoring_detail"
+},
+"prohibited_scoring": {
+"$ref": "#/$defs/prohibited_scoring_detail"
+},
+"confidence_range": {
+"$ref": "#/$defs/confidence_range"
+},
+"boundary_rules": {
+"type": "array",
+"description": "Rules that keep scoring inside review-support boundaries.",
+"items": {
+"$ref": "#/$defs/boundary_rule"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"execution_boundary": {
+"$ref": "#/$defs/execution_boundary"
+},
+"human_review_requirement": {
+"$ref": "#/$defs/human_review_requirement"
+},
+"governance_requirement": {
+"$ref": "#/$defs/governance_requirement"
+},
+"score_provenance_required": {
+"type": "boolean",
+"description": "Whether scores should include provenance information."
+},
+"uncertainty_handling": {
+"$ref": "#/$defs/uncertainty_handling"
+},
+"created_by": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"updated_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+},
+"$defs": {
+"id": {
+"type": "string",
+"minLength": 1,
+"maxLength": 128,
+"pattern": "^[A-Za-z0-9._:-]+$"
+},
+"date_time": {
+"type": "string",
+"format": "date-time"
+},
+"confidence": {
+"type": "number",
+"minimum": 0,
+"maximum": 1
+},
+"allowed_scoring_field": {
+"type": "string",
+"enum": [
+"confidence",
+"review_score",
+"evidence_quality",
+"reference_depth",
+"signal_strength",
+"priority"
+]
+},
+"prohibited_scoring_field": {
+"type": "string",
+"enum": [
+"automatic_money_value",
+"final_creator_rank",
+"legal_ownership_score",
+"absolute_originality_score",
+"automatic_compensation_score",
+"final_entitlement_score"
+]
+},
+"evidence_quality": {
+"type": "string",
+"enum": [
+"none",
+"weak",
+"partial",
+"sufficient",
+"strong",
+"verified"
+]
+},
+"reference_depth": {
+"type": "string",
+"enum": [
+"surface",
+"minor",
+"moderate",
+"deep",
+"structural"
+]
+},
+"signal_strength": {
+"type": "string",
+"enum": [
+"none",
+"low",
+"medium",
+"high",
+"critical"
+]
+},
+"priority": {
+"type": "string",
+"enum": [
+"low",
+"medium",
+"high",
+"urgent"
+]
+},
+"score_review_status": {
+"type": "string",
+"enum": [
+"draft",
+"ai_generated",
+"pending_human_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"archived"
+]
+},
+"uncertainty_state": {
+"type": "string",
+"enum": [
+"clear",
+"uncertain",
+"conflicting",
+"unresolved",
+"requires_review",
+"requires_external_verification"
+]
+},
+"allowed_scoring_detail": {
+"type": "object",
+"description": "Detailed definitions of allowed scoring categories.",
+"additionalProperties": false,
+"properties": {
+"confidence": {
+"$ref": "#/$defs/allowed_scoring_item"
+},
+"review_score": {
+"$ref": "#/$defs/allowed_scoring_item"
+},
+"evidence_quality": {
+"$ref": "#/$defs/allowed_scoring_item"
+},
+"reference_depth": {
+"$ref": "#/$defs/allowed_scoring_item"
+},
+"signal_strength": {
+"$ref": "#/$defs/allowed_scoring_item"
+},
+"priority": {
+"$ref": "#/$defs/allowed_scoring_item"
+}
+}
+},
+"allowed_scoring_item": {
+"type": "object",
+"required": [
+"allowed",
+"use"
+],
+"additionalProperties": false,
+"properties": {
+"allowed": {
+"type": "boolean",
+"const": true
+},
+"use": {
+"type": "string",
+"description": "Permitted use of this scoring category."
+},
+"requires_human_review_for_public_action": {
+"type": "boolean"
+},
+"requires_provenance": {
+"type": "boolean"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"prohibited_scoring_detail": {
+"type": "object",
+"description": "Detailed definitions of prohibited scoring categories.",
+"additionalProperties": false,
+"properties": {
+"automatic_money_value": {
+"$ref": "#/$defs/prohibited_scoring_item"
+},
+"final_creator_rank": {
+"$ref": "#/$defs/prohibited_scoring_item"
+},
+"legal_ownership_score": {
+"$ref": "#/$defs/prohibited_scoring_item"
+},
+"absolute_originality_score": {
+"$ref": "#/$defs/prohibited_scoring_item"
+},
+"automatic_compensation_score": {
+"$ref": "#/$defs/prohibited_scoring_item"
+},
+"final_entitlement_score": {
+"$ref": "#/$defs/prohibited_scoring_item"
+}
+}
+},
+"prohibited_scoring_item": {
+"type": "object",
+"required": [
+"allowed",
+"reason"
+],
+"additionalProperties": false,
+"properties": {
+"allowed": {
+"type": "boolean",
+"const": false
+},
+"reason": {
+"type": "string"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"confidence_range": {
+"type": "object",
+"description": "Permitted confidence range and interpretation.",
+"required": [
+"minimum",
+"maximum"
+],
+"additionalProperties": false,
+"properties": {
+"minimum": {
+"type": "number",
+"const": 0
+},
+"maximum": {
+"type": "number",
+"const": 1
+},
+"interpretation": {
+"type": "object",
+"additionalProperties": false,
+"properties": {
+"low": {
+"type": "string",
+"examples": [
+"0.00 - 0.30"
+]
+},
+"moderate": {
+"type": "string",
+"examples": [
+"0.31 - 0.60"
+]
+},
+"high": {
+"type": "string",
+"examples": [
+"0.61 - 0.85"
+]
+},
+"very_high": {
+"type": "string",
+"examples": [
+"0.86 - 1.00"
+]
+}
+}
+}
+}
+},
+"boundary_rule": {
+"type": "string",
+"enum": [
+"scores_support_review",
+"scores_do_not_replace_judgment",
+"confidence_is_not_truth",
+"evidence_quality_is_not_legal_proof",
+"signal_strength_is_not_entitlement",
+"priority_is_not_creator_rank",
+"ai_scoring_must_remain_reviewable",
+"uncertainty_must_remain_visible",
+"scores_may_not_trigger_automatic_execution",
+"scores_may_not_calculate_compensation"
+]
+},
+"execution_boundary": {
+"type": "object",
+"description": "Execution boundary preventing scores from becoming automatic authority.",
+"required": [
+"automatic_execution",
+"automatic_compensation",
+"automatic_royalty_allocation",
+"legal_ownership_decision",
+"final_creator_ranking",
+"absolute_originality_scoring"
+],
+"additionalProperties": false,
+"properties": {
+"automatic_execution": {
+"type": "boolean",
+"const": false
+},
+"automatic_compensation": {
+"type": "boolean",
+"const": false
+},
+"automatic_royalty_allocation": {
+"type": "boolean",
+"const": false
+},
+"legal_ownership_decision": {
+"type": "boolean",
+"const": false
+},
+"final_creator_ranking": {
+"type": "boolean",
+"const": false
+},
+"absolute_originality_scoring": {
+"type": "boolean",
+"const": false
+},
+"requires_human_review": {
+"type": "boolean"
+},
+"requires_governance_for_high_impact_cases": {
+"type": "boolean"
+}
+}
+},
+"human_review_requirement": {
+"type": "object",
+"description": "Defines when human review is required before a score can support public action.",
+"additionalProperties": false,
+"properties": {
+"required": {
+"type": "boolean"
+},
+"applies_when": {
+"type": "array",
+"items": {
+"type": "string",
+"enum": [
+"recommendation_affects_public_attribution",
+"recommendation_affects_return_record",
+"recommendation_affects_governance_status",
+"recommendation_affects_public_record",
+"recommendation_affects_reputation",
+"recommendation_affects_future_return_pathway"
+]
+},
+"uniqueItems": true
+},
+"required_reviewer_roles": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_role"
+},
+"uniqueItems": true
+}
+}
+},
+"governance_requirement": {
+"type": "object",
+"description": "Defines governance requirements for score use.",
+"additionalProperties": false,
+"properties": {
+"requires_governance_record": {
+"type": "boolean"
+},
+"requires_score_provenance": {
+"type": "boolean"
+},
+"requires_score_review_status": {
+"type": "boolean"
+},
+"requires_contestability": {
+"type": "boolean"
+},
+"allows_score_challenge": {
+"type": "boolean"
+},
+"preserves_unresolved_cases": {
+"type": "boolean"
+}
+}
+},
+"governance_role": {
+"type": "string",
+"enum": [
+"originator",
+"maintainer",
+"reviewer",
+"ai_assistant",
+"community_reviewer",
+"external_verifier",
+"governance_steward",
+"dispute_reviewer",
+"observer"
+]
+},
+"uncertainty_handling": {
+"type": "object",
+"description": "Defines how uncertain scores or relationships should be preserved.",
+"additionalProperties": false,
+"properties": {
+"allowed_states": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/uncertainty_state"
+},
+"uniqueItems": true
+},
+"preserve_uncertainty": {
+"type": "boolean"
+},
+"allow_unresolved_status": {
+"type": "boolean"
+},
+"requires_reason_when_unresolved": {
+"type": "boolean"
+}
+}
+},
+"score_object": {
+"type": "object",
+"description": "Optional reusable structure for bounded scoring values.",
+"additionalProperties": false,
+"properties": {
+"confidence": {
+"type": "object",
+"additionalProperties": false,
+"properties": {
+"relationship_confidence": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_confidence": {
+"$ref": "#/$defs/confidence"
+},
+"review_confidence": {
+"$ref": "#/$defs/confidence"
+}
+}
+},
+"review_score": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"reference_depth": {
+"$ref": "#/$defs/reference_depth"
+},
+"signal_strength": {
+"$ref": "#/$defs/signal_strength"
+},
+"priority": {
+"$ref": "#/$defs/priority"
+},
+"score_review_status": {
+"$ref": "#/$defs/score_review_status"
+},
+"uncertainty": {
+"$ref": "#/$defs/uncertainty_state"
+},
+"score_provenance": {
+"$ref": "#/$defs/score_provenance"
+}
+}
+},
+"score_provenance": {
+"type": "object",
+"description": "Provenance for a score or scoring assessment.",
+"required": [
+"score_id",
+"generated_by"
+],
+"additionalProperties": false,
+"properties": {
+"score_id": {
+"$ref": "#/$defs/id"
+},
+"generated_by": {
+"type": "string"
+},
+"reviewed_by": {
+"type": "string"
+},
+"generated_at": {
+"$ref": "#/$defs/date_time"
+},
+"reviewed_at": {
+"$ref": "#/$defs/date_time"
+},
+"method": {
+"type": "string"
+},
+"related_evidence": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"metadata": {
+"type": "object",
+"description": "Optional metadata. This object is intentionally flexible for early draft usage.",
+"additionalProperties": true
+}
+}
+}
