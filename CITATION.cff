@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use or reference this specification, please cite it as below."
+
+title: "Royalty OS v0.3: Policy-Guided Value Graph Architecture"
+version: "0.3.0-draft"
+date-released: "2026-06-06"
+
+type: software
+license: MIT
+
+authors:
+
+* name: "SamuraiWriter7"
+
+repository-code: "https://github.com/SamuraiWriter7/royalty-os-v0.3"
+
+abstract: >
+Royalty OS v0.3 is a policy-guided value graph architecture for transforming
+value event logs into reviewable value relationships. It defines a structure
+for Value Graphs, Policy Engine rules, Scoring Boundaries, Governance Records,
+and integrated review-support records. Royalty OS v0.3 does not automatically
+decide value, ownership, compensation, originality, or legal entitlement.
+Instead, it structures value relationships so that humans and AI systems can
+review them responsibly.
+
+keywords:
+
+* royalty-os
+* value-graph
+* policy-engine
+* scoring-boundary
+* governance-layer
+* value-event-log
+* trace-to-value
+* ai-assisted-review
+* human-reviewed-ai
+* policy-guided-architecture
+* responsible-ai
+* attribution-infrastructure
+
+preferred-citation:
+type: software
+title: "Royalty OS v0.3: Policy-Guided Value Graph Architecture"
+authors:
+- name: "SamuraiWriter7"
+version: "0.3.0-draft"
+date-released: "2026-06-06"
+repository-code: "https://github.com/SamuraiWriter7/royalty-os-v0.3"
+abstract: >
+Royalty OS v0.3 is a policy-guided value graph architecture for transforming
+value event logs into reviewable value relationships. It provides schemas,
+examples, validation scripts, and governance boundaries for human-reviewed,
+AI-assisted, and policy-guided value review.
