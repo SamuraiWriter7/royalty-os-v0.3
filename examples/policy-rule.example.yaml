@@ -74,5 +74,8 @@ policy_rule:
     creates_governance_task: true
     governance_task_type: public_attribution_review
 
+  enforcement_level: requires_governance_review
+
   created_at: "2026-06-05T00:00:00Z"
   updated_at: "2026-06-05T00:00:00Z"
+
