@@ -2,6 +2,10 @@
 
 **Policy-Guided Value Graph Architecture**
 
+[![Validate Royalty OS v0.3 Examples](https://github.com/SamuraiWriter7/royalty-os-v0.3/actions/workflows/validate-royalty-os-v0.3.yml/badge.svg)](https://github.com/SamuraiWriter7/royalty-os-v0.3/actions/workflows/validate-royalty-os-v0.3.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Status](https://img.shields.io/badge/status-v0.3.0--draft-blue)
+
 Royalty OS v0.3 is a specification for transforming value event logs into policy-guided value graphs.
 
 It does not automatically decide value, ownership, compensation, or legal entitlement.
@@ -457,6 +461,8 @@ Royalty OS v0.3 follows these principles:
 3. Evidence before scoring
 4. Policy before execution
 5. Human responsibility before AI recommendation
+6. Uncertainty before false certainty
+7. Governance before public action
 ```
 
 ---
@@ -515,13 +521,15 @@ This repository is an early-stage specification and may change as the model deve
 
 This project is released under the MIT License.
 
+See [`LICENSE`](LICENSE).
+
 ---
 
 ## Citation
 
 If you use or reference this specification, please cite this repository.
 
-A `CITATION.cff` file will be provided for structured citation metadata.
+See [`CITATION.cff`](CITATION.cff).
 
 ---
 
@@ -540,3 +548,4 @@ v0.1 placed the stone.
 v0.2 let the water flow.
 v0.3 maps the waterways.
 ```
+
