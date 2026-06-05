@@ -1,0 +1,122 @@
+policy_rule:
+id: policy-high-signal-attribution
+version: "0.3.0-draft"
+name: "High Signal Attribution Rule"
+description: "Recommend citation, linkback, and conceptual attribution when a high value signal is supported by sufficient evidence and human review."
+
+scope:
+applies_to:
+- ValueSignal
+- EvidenceRecord
+- Review
+- PolicyRecommendation
+origin_types:
+- article
+- essay
+- repository
+- protocol
+- design_document
+trace_types:
+- concept
+- structure
+- pattern
+- terminology
+- design_logic
+reference_types:
+- conceptual_influence
+- direct_citation
+- linkback
+- derived_implementation
+- transformed_idea
+signal_types:
+- conceptual_influence
+- structural_reference
+- derived_usage
+
+conditions:
+signal_strength: high
+evidence_quality:
+- sufficient
+- strong
+- verified
+review_status:
+- human_reviewed
+- approved
+reference_depth:
+- moderate
+- deep
+- structural
+confidence_min: 0.7
+requires_human_review: true
+requires_governance_review: true
+
+recommendations:
+- cite_origin
+- add_linkback
+- add_conceptual_attribution
+- request_governance_review
+
+required_evidence:
+minimum_evidence_quality: sufficient
+minimum_evidence_count: 1
+accepted_evidence_types:
+- url
+- review_note
+- citation_record
+- similarity_report
+- commit_hash
+requires_evidence_record: true
+requires_source_uri: true
+requires_review_notes: true
+
+review_requirements:
+requires_human_review: true
+requires_ai_assisted_review: false
+required_reviewer_roles:
+- maintainer
+- reviewer
+minimum_review_status: human_reviewed
+requires_review_notes: true
+
+governance_requirements:
+requires_governance_record: true
+requires_governance_review: true
+requires_external_verifier: false
+allows_external_verifier: true
+requires_dispute_review_if_challenged: true
+creates_governance_task: true
+governance_task_type: public_attribution_review
+
+enforcement_level: requires_governance_review
+
+execution_boundary:
+automatic_execution: false
+automatic_compensation: false
+automatic_royalty_allocation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_scoring: false
+requires_human_review_for_public_action: true
+
+conflict_handling:
+on_conflict: request_governance_review
+priority_order:
+- governance_review
+- human_review
+- request_more_evidence
+- mark_as_unresolved
+- attribution_recommendation
+- no_action_required
+preserve_unresolved_case: true
+
+created_by: "Example Maintainer"
+created_at: "2026-06-05T00:00:00Z"
+updated_at: "2026-06-05T00:00:00Z"
+
+metadata:
+boundary_notice:
+automatic_compensation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_score: false
+note: "This rule generates reviewable attribution recommendations only. It does not execute compensation or determine ownership."
