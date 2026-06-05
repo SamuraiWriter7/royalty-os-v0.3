@@ -76,12 +76,11 @@ governance_record:
     audited_by: "Example Governance Steward"
     audited_at: "2026-06-05T04:30:00Z"
     audit_notes: "Boundary check passed. No automatic compensation, legal ownership decision, creator ranking, or AI final decision is present."
-
-  change_log:
-    - timestamp: "2026-06-05T04:00:00Z"
-      actor: "maintainer-001"
-      change_type: "governance_approval_created"
-      description: "Created governance approval for non-financial attribution recommendation."
+    change_log:
+      - timestamp: "2026-06-05T04:00:00Z"
+        actor: "maintainer-001"
+        change_type: "governance_approval_created"
+        description: "Created governance approval for non-financial attribution recommendation."
 
     - timestamp: "2026-06-05T04:30:00Z"
       actor: "governance-steward-001"
