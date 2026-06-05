@@ -1,193 +1,189 @@
 value_graph:
-id: value-graph-001
-version: "0.3.0-draft"
-title: "Example Policy-Guided Value Graph"
-description: "A minimal example showing how an origin, trace, reference event, value signal, evidence, review, policy recommendation, governance record, allocation decision, and return record are connected."
-graph_status: pending_review
-created_at: "2026-06-05T00:00:00Z"
-updated_at: "2026-06-05T04:00:00Z"
+  id: value-graph-001
+  version: "0.3.0-draft"
+  title: "Example Policy-Guided Value Graph"
+  description: "A minimal example showing how an origin, trace, reference event, value signal, evidence, review, policy recommendation, governance record, allocation decision, and return record are connected."
+  graph_status: pending_review
+  created_at: "2026-06-05T00:00:00Z"
+  updated_at: "2026-06-05T04:00:00Z"
 
-source:
-source_version: "0.2"
-source_event_ids:
-- event-001
-- event-002
-- event-003
-source_uri: "https://example.org/royalty-os-v0.2/events/example"
-transformed_at: "2026-06-05T00:30:00Z"
-transformed_by: "AI assistant"
+  source:
+    source_version: "0.2"
+    source_event_ids:
+      - event-001
+      - event-002
+      - event-003
+    source_uri: "https://example.org/royalty-os-v0.2/events/example"
+    transformed_at: "2026-06-05T00:30:00Z"
+    transformed_by: "AI assistant"
 
-nodes:
-origins:
-- id: origin-001
-type: article
-title: "Example Essay on Policy-Guided Value Graphs"
-creator: "Example Creator"
-created_at: "2026-06-05T00:00:00Z"
-uri: "https://example.org/example-essay"
-description: "An example origin that introduces the concept of a policy-guided value graph."
+  nodes:
+    origins:
+      - id: origin-001
+        type: article
+        title: "Example Essay on Policy-Guided Value Graphs"
+        creator: "Example Creator"
+        created_at: "2026-06-05T00:00:00Z"
+        uri: "https://example.org/example-essay"
+        description: "An example origin that introduces the concept of a policy-guided value graph."
 
-```
-traces:
-  - id: trace-001
-    origin_id: origin-001
-    type: concept
-    label: "Policy-guided value graph"
-    description: "A conceptual structure for transforming value event logs into reviewable graph relationships."
-    created_at: "2026-06-05T00:10:00Z"
+    traces:
+      - id: trace-001
+        origin_id: origin-001
+        type: concept
+        label: "Policy-guided value graph"
+        description: "A conceptual structure for transforming value event logs into reviewable graph relationships."
+        created_at: "2026-06-05T00:10:00Z"
 
-reference_events:
-  - id: ref-001
-    trace_id: trace-001
-    origin_id: origin-001
-    target_id: article-002
-    target_uri: "https://example.org/derived-article"
-    reference_type: conceptual_influence
-    detected_by: "AI assistant"
-    detected_at: "2026-06-05T01:00:00Z"
-    description: "The target article appears to use a concept derived from the origin trace."
+    reference_events:
+      - id: ref-001
+        trace_id: trace-001
+        origin_id: origin-001
+        target_id: article-002
+        target_uri: "https://example.org/derived-article"
+        reference_type: conceptual_influence
+        detected_by: "AI assistant"
+        detected_at: "2026-06-05T01:00:00Z"
+        description: "The target article appears to use a concept derived from the origin trace."
 
-value_signals:
-  - id: signal-001
-    reference_event_id: ref-001
-    trace_id: trace-001
-    origin_id: origin-001
-    signal_type: conceptual_influence
-    signal_strength: high
-    confidence: 0.82
-    evidence_quality: sufficient
-    description: "The reference appears meaningful enough to require human review."
-    created_at: "2026-06-05T01:10:00Z"
+    value_signals:
+      - id: signal-001
+        reference_event_id: ref-001
+        trace_id: trace-001
+        origin_id: origin-001
+        signal_type: conceptual_influence
+        signal_strength: high
+        confidence: 0.82
+        evidence_quality: sufficient
+        description: "The reference appears meaningful enough to require human review."
+        created_at: "2026-06-05T01:10:00Z"
 
-evidence_records:
-  - id: evidence-001
-    evidence_type: url
-    uri: "https://example.org/derived-article"
-    summary: "The target article uses a structure similar to the origin concept."
-    evidence_quality: sufficient
-    related_node_ids:
-      - ref-001
-      - signal-001
-    created_at: "2026-06-05T01:20:00Z"
+    evidence_records:
+      - id: evidence-001
+        evidence_type: url
+        uri: "https://example.org/derived-article"
+        summary: "The target article uses a structure similar to the origin concept."
+        evidence_quality: sufficient
+        related_node_ids:
+          - ref-001
+          - signal-001
+        created_at: "2026-06-05T01:20:00Z"
 
-reviews:
-  - id: review-001
-    reviewer_role: maintainer
-    reviewer_id: maintainer-001
-    review_status: approved
-    review_score: 0.78
-    notes: "The conceptual relationship is sufficiently supported for attribution recommendation, but final public action still requires governance review."
-    reviewed_at: "2026-06-05T02:00:00Z"
+    reviews:
+      - id: review-001
+        reviewer_role: maintainer
+        reviewer_id: maintainer-001
+        review_status: approved
+        review_score: 0.78
+        notes: "The conceptual relationship is sufficiently supported for attribution recommendation, but final public action still requires governance review."
+        reviewed_at: "2026-06-05T02:00:00Z"
 
-policy_recommendations:
-  - id: recommendation-001
-    policy_rule_id: policy-high-signal-attribution
-    value_graph_id: value-graph-001
-    applies_to:
-      origin_id: origin-001
-      trace_id: trace-001
-      reference_event_id: ref-001
-      value_signal_id: signal-001
-      evidence_record_id: evidence-001
-      review_id: review-001
-    recommendation:
-      - cite_origin
-      - add_linkback
-      - add_conceptual_attribution
-    status: pending_human_review
-    generated_by: policy_engine
-    generated_at: "2026-06-05T02:30:00Z"
+    policy_recommendations:
+      - id: recommendation-001
+        policy_rule_id: policy-high-signal-attribution
+        value_graph_id: value-graph-001
+        applies_to:
+          origin_id: origin-001
+          trace_id: trace-001
+          reference_event_id: ref-001
+          value_signal_id: signal-001
+          evidence_record_id: evidence-001
+          review_id: review-001
+        recommendation:
+          - cite_origin
+          - add_linkback
+          - add_conceptual_attribution
+        status: pending_human_review
+        generated_by: policy_engine
+        generated_at: "2026-06-05T02:30:00Z"
 
-allocation_decisions:
-  - id: allocation-001
-    decision_type: attribution_recommended
-    decided_by: maintainer-001
-    decision_status: approved
-    notes: "Only non-financial attribution is recommended. No compensation or legal ownership decision is made."
-    decided_at: "2026-06-05T03:00:00Z"
+    allocation_decisions:
+      - id: allocation-001
+        decision_type: attribution_recommended
+        decided_by: maintainer-001
+        decision_status: approved
+        notes: "Only non-financial attribution is recommended. No compensation or legal ownership decision is made."
+        decided_at: "2026-06-05T03:00:00Z"
 
-return_records:
-  - id: return-001
-    return_type: conceptual_attribution
-    target_id: article-002
-    origin_id: origin-001
-    recorded_at: "2026-06-05T03:30:00Z"
-    notes: "Conceptual attribution was recorded as a non-financial return action."
+    return_records:
+      - id: return-001
+        return_type: conceptual_attribution
+        target_id: article-002
+        origin_id: origin-001
+        recorded_at: "2026-06-05T03:30:00Z"
+        notes: "Conceptual attribution was recorded as a non-financial return action."
 
-governance_records:
-  - id: governance-001
-    related_value_graph_id: value-graph-001
-    related_recommendation_id: recommendation-001
-    actor:
-      role: maintainer
-      id: maintainer-001
-    action: approve
-    status: approved
-    reason: "Evidence quality is sufficient and the recommendation remains within the v0.3 boundary."
-    timestamp: "2026-06-05T04:00:00Z"
-```
+    governance_records:
+      - id: governance-001
+        related_value_graph_id: value-graph-001
+        related_recommendation_id: recommendation-001
+        actor:
+          role: maintainer
+          id: maintainer-001
+        action: approve
+        status: approved
+        reason: "Evidence quality is sufficient and the recommendation remains within the v0.3 boundary."
+        timestamp: "2026-06-05T04:00:00Z"
 
-edges:
-- from: origin-001
-to: trace-001
-type: contains_trace
-description: "The origin contains the trace concept."
-confidence: 1.0
+  edges:
+    - from: origin-001
+      to: trace-001
+      type: contains_trace
+      description: "The origin contains the trace concept."
+      confidence: 1.0
 
-```
-- from: trace-001
-  to: ref-001
-  type: referenced_by
-  description: "The trace is referenced by the reference event."
-  confidence: 0.82
+    - from: trace-001
+      to: ref-001
+      type: referenced_by
+      description: "The trace is referenced by the reference event."
+      confidence: 0.82
 
-- from: ref-001
-  to: signal-001
-  type: generates_signal
-  description: "The reference event generates a value signal."
-  confidence: 0.82
+    - from: ref-001
+      to: signal-001
+      type: generates_signal
+      description: "The reference event generates a value signal."
+      confidence: 0.82
 
-- from: signal-001
-  to: evidence-001
-  type: supported_by
-  description: "The value signal is supported by evidence."
-  confidence: 0.76
+    - from: signal-001
+      to: evidence-001
+      type: supported_by
+      description: "The value signal is supported by evidence."
+      confidence: 0.76
 
-- from: signal-001
-  to: review-001
-  type: reviewed_by
-  description: "The value signal was reviewed by a maintainer."
-  confidence: 0.78
+    - from: signal-001
+      to: review-001
+      type: reviewed_by
+      description: "The value signal was reviewed by a maintainer."
+      confidence: 0.78
 
-- from: review-001
-  to: recommendation-001
-  type: recommends
-  description: "The approved review supports the policy recommendation."
-  confidence: 0.78
+    - from: review-001
+      to: recommendation-001
+      type: recommends
+      description: "The approved review supports the policy recommendation."
+      confidence: 0.78
 
-- from: recommendation-001
-  to: allocation-001
-  type: decided_by
-  description: "The policy recommendation is connected to a reviewed allocation decision."
-  confidence: 0.74
+    - from: recommendation-001
+      to: allocation-001
+      type: decided_by
+      description: "The policy recommendation is connected to a reviewed allocation decision."
+      confidence: 0.74
 
-- from: allocation-001
-  to: return-001
-  type: recorded_as
-  description: "The allocation decision is recorded as a non-financial return record."
-  confidence: 0.72
+    - from: allocation-001
+      to: return-001
+      type: recorded_as
+      description: "The allocation decision is recorded as a non-financial return record."
+      confidence: 0.72
 
-- from: recommendation-001
-  to: governance-001
-  type: reviewed_by
-  description: "The recommendation is reviewed through governance."
-  confidence: 0.8
-```
+    - from: recommendation-001
+      to: governance-001
+      type: reviewed_by
+      description: "The recommendation is reviewed through governance."
+      confidence: 0.8
 
-metadata:
-boundary_notice:
-automatic_compensation: false
-legal_ownership_decision: false
-final_creator_ranking: false
-absolute_originality_score: false
-note: "This example demonstrates reviewable value mapping only. It does not execute compensation or determine ownership."
+  metadata:
+    boundary_notice:
+      automatic_compensation: false
+      legal_ownership_decision: false
+      final_creator_ranking: false
+      absolute_originality_score: false
+    note: "This example demonstrates reviewable value mapping only. It does not execute compensation or determine ownership."
