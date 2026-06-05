@@ -1,0 +1,202 @@
+royalty_os_v0_3_record:
+id: royalty-os-v0.3-record-001
+version: "0.3.0-draft"
+status: in_review
+title: "Example Royalty OS v0.3 Integrated Record"
+description: "An integrated example connecting a value graph, policy evaluation, scoring boundary check, governance review, and non-financial return record."
+
+core_statement: "Royalty OS v0.3 does not decide value automatically. It structures value relationships so that humans and AI can review them responsibly."
+
+operating_model:
+- human_reviewed
+- ai_assisted
+- policy_guided
+
+source:
+source_version: "0.2"
+source_system: "Royalty OS v0.2 Event-Based Value Circulation"
+source_uri: "https://example.org/royalty-os-v0.2/events/example"
+source_event_ids:
+- event-001
+- event-002
+- event-003
+source_record_ids:
+- record-v0.2-001
+
+transformation_record:
+id: transform-001
+source_version: "0.2"
+target_version: "0.3.0-draft"
+source_event_ids:
+- event-001
+- event-002
+- event-003
+source_record_ids:
+- record-v0.2-001
+target_value_graph_id: value-graph-001
+transformed_by: "AI assistant"
+reviewed_by: "Example Maintainer"
+transformed_at: "2026-06-05T00:30:00Z"
+notes: "The v0.2 value event logs were transformed into a v0.3 reviewable value graph."
+
+value_graph:
+id: value-graph-001
+schema_ref: "schemas/value-graph.schema.json"
+graph_status: pending_review
+origin_ids:
+- origin-001
+trace_ids:
+- trace-001
+reference_event_ids:
+- ref-001
+value_signal_ids:
+- signal-001
+evidence_record_ids:
+- evidence-001
+review_ids:
+- review-001
+summary: "The graph connects an origin article, a conceptual trace, a reference event, a high value signal, evidence, and human review."
+
+policy_evaluation:
+id: policy-evaluation-001
+mode: policy_guided_review
+schema_ref: "schemas/policy-rule.schema.json"
+evaluated_by: "policy_engine"
+evaluated_at: "2026-06-05T02:30:00Z"
+
+```
+applied_policy_rules:
+  - policy-high-signal-attribution
+
+input_summary:
+  signal_strength: high
+  evidence_quality: sufficient
+  reference_depth: deep
+  review_status: human_reviewed
+  confidence: 0.82
+  priority: high
+
+recommendations:
+  - cite_origin
+  - add_linkback
+  - add_conceptual_attribution
+  - request_governance_review
+
+status: pending_governance_review
+requires_human_review: true
+requires_governance_review: true
+notes: "The policy engine recommends non-financial attribution actions only. The recommendation requires governance review before any public action."
+```
+
+scoring_boundary_check:
+id: scoring-boundary-check-001
+schema_ref: "schemas/scoring-boundary.schema.json"
+purpose: review_support_only
+
+```
+allowed_fields_used:
+  - confidence
+  - review_score
+  - evidence_quality
+  - reference_depth
+  - signal_strength
+  - priority
+
+prohibited_fields_used: []
+
+scores:
+  confidence:
+    relationship_confidence: 0.82
+    evidence_confidence: 0.76
+    review_confidence: 0.78
+  review_score: 0.78
+  evidence_quality: sufficient
+  reference_depth: deep
+  signal_strength: high
+  priority: high
+  score_review_status: human_reviewed
+  uncertainty: requires_review
+
+status: passed
+reviewed_by: "Example Maintainer"
+reviewed_at: "2026-06-05T03:00:00Z"
+notes: "The scoring boundary check passed. No prohibited scoring fields were used."
+```
+
+governance:
+mode: human_reviewed_ai_assisted_policy_guided
+schema_ref: "schemas/governance-record.schema.json"
+
+```
+governance_record_ids:
+  - governance-001
+
+assigned_roles:
+  - maintainer
+  - reviewer
+  - ai_assistant
+
+actions:
+  - approve
+  - request_governance_review
+
+status: approved
+requires_external_verification: false
+preserves_unresolved_cases: true
+notes: "Governance approved the non-financial attribution recommendation. This does not approve compensation, ownership, originality scoring, or creator ranking."
+```
+
+public_action_boundary:
+requires_governance_review_for_public_action: true
+
+```
+public_actions:
+  - adding_citation
+  - adding_linkback
+  - publishing_attribution
+  - updating_return_record
+
+status: approved
+notes: "Public attribution actions are allowed only after human and governance review."
+```
+
+return_record:
+id: return-001
+return_type: conceptual_attribution
+origin_id: origin-001
+target_id: article-002
+status: approved
+recorded_at: "2026-06-05T03:30:00Z"
+notes: "A non-financial conceptual attribution return was recorded. No payment or ownership decision was made."
+
+execution_boundary:
+automatic_execution: false
+automatic_compensation: false
+automatic_royalty_allocation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_scoring: false
+automatic_attribution_enforcement: false
+autonomous_dispute_resolution: false
+ai_final_decision: false
+requires_human_review_for_public_action: true
+requires_governance_record_for_approval: true
+preserves_unresolved_cases: true
+
+created_at: "2026-06-05T00:00:00Z"
+updated_at: "2026-06-05T04:00:00Z"
+
+metadata:
+example_type: integrated_record
+related_examples:
+- examples/value-graph.example.yaml
+- examples/policy-rule.example.yaml
+- examples/scoring-boundary.example.yaml
+- examples/governance-record.example.yaml
+boundary_notice:
+automatic_compensation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_score: false
+ai_final_decision: false
+note: "This integrated example demonstrates the complete v0.3 review-support flow. It does not execute compensation or determine ownership."
