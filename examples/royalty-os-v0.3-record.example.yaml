@@ -133,12 +133,12 @@ royalty_os_v0_3_record:
 
     actions:
       - approve
-      - request_governance_review
 
     status: approved
     requires_external_verification: false
     preserves_unresolved_cases: true
     notes: "Governance approved the non-financial attribution recommendation. This does not approve compensation, ownership, originality scoring, or creator ranking."
+
 
   public_action_boundary:
     requires_governance_review_for_public_action: true
