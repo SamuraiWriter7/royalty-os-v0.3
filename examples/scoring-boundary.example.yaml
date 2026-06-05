@@ -1,179 +1,39 @@
 scoring_boundary:
-id: scoring-boundary-001
-version: "0.3.0-draft"
-purpose: review_support_only
-description: "A scoring boundary example defining which scores may support review and which scores are prohibited in Royalty OS v0.3."
+  id: scoring-boundary-001
+  version: "0.3.0-draft"
+  purpose: review_support_only
+  description: "A scoring boundary example defining which scores may support review and which scores are prohibited in Royalty OS v0.3."
 
-allowed_fields:
-- confidence
-- review_score
-- evidence_quality
-- reference_depth
-- signal_strength
-- priority
+  allowed_fields_used:
+    - confidence
+    - review_score
+    - evidence_quality
+    - reference_depth
+    - signal_strength
+    - priority
 
-prohibited_fields:
-- automatic_money_value
-- final_creator_rank
-- legal_ownership_score
-- absolute_originality_score
-- automatic_compensation_score
-- final_entitlement_score
+  prohibited_fields_used:
+    - automatic_money_value
+    - final_creator_rank
+    - legal_ownership_score
+    - absolute_originality_score
+    - automatic_compensation_score
+    - final_entitlement_score
 
-allowed_scoring:
-confidence:
-allowed: true
-use: "Supports review of relationship, evidence, and review confidence."
-requires_human_review_for_public_action: true
-requires_provenance: true
-notes: "Confidence is a review aid, not a truth declaration."
+  scores:
+    confidence:
+      relationship_confidence: 0.82
+      evidence_confidence: 0.76
+      review_confidence: 0.78
+    review_score: 0.78
+    evidence_quality: sufficient
+    reference_depth: deep
+    signal_strength: high
+    priority: high
+    score_review_status: human_reviewed
+    uncertainty: requires_review
 
-```
-review_score:
-  allowed: true
-  use: "Summarizes reviewer assessment for review triage."
-  requires_human_review_for_public_action: true
-  requires_provenance: true
-  notes: "Review score must not become a final verdict."
-
-evidence_quality:
-  allowed: true
-  use: "Indicates the sufficiency and reliability of evidence."
-  requires_human_review_for_public_action: true
-  requires_provenance: true
-  notes: "Evidence quality supports review but does not prove ownership."
-
-reference_depth:
-  allowed: true
-  use: "Describes how deeply a target appears to depend on an origin or trace."
-  requires_human_review_for_public_action: true
-  requires_provenance: true
-  notes: "Reference depth must not automatically determine attribution or ownership."
-
-signal_strength:
-  allowed: true
-  use: "Indicates the apparent strength of a value signal."
-  requires_human_review_for_public_action: true
-  requires_provenance: true
-  notes: "Signal strength may trigger review priority but not automatic entitlement."
-
-priority:
-  allowed: true
-  use: "Orders review queues and governance tasks."
-  requires_human_review_for_public_action: false
-  requires_provenance: true
-  notes: "Priority is workflow-related and must not become creator ranking."
-```
-
-prohibited_scoring:
-automatic_money_value:
-allowed: false
-reason: "Royalty OS v0.3 does not calculate compensation."
-notes: "Money calculation belongs to future compensation layers, not v0.3."
-
-```
-final_creator_rank:
-  allowed: false
-  reason: "Royalty OS v0.3 does not rank creators."
-  notes: "Ranking creators would exceed the review-support boundary."
-
-legal_ownership_score:
-  allowed: false
-  reason: "Royalty OS v0.3 does not determine legal ownership."
-  notes: "Legal ownership requires external legal and institutional review."
-
-absolute_originality_score:
-  allowed: false
-  reason: "Royalty OS v0.3 does not determine absolute originality."
-  notes: "Originality cannot be reduced to an automatic score in v0.3."
-
-automatic_compensation_score:
-  allowed: false
-  reason: "Royalty OS v0.3 does not perform automatic compensation."
-  notes: "Compensation scoring would create unsafe automated value judgment."
-
-final_entitlement_score:
-  allowed: false
-  reason: "Royalty OS v0.3 does not determine final entitlement."
-  notes: "Entitlement requires governance, review, and possibly legal process."
-```
-
-confidence_range:
-minimum: 0
-maximum: 1
-interpretation:
-low: "0.00 - 0.30"
-moderate: "0.31 - 0.60"
-high: "0.61 - 0.85"
-very_high: "0.86 - 1.00"
-
-boundary_rules:
-- scores_support_review
-- scores_do_not_replace_judgment
-- confidence_is_not_truth
-- evidence_quality_is_not_legal_proof
-- signal_strength_is_not_entitlement
-- priority_is_not_creator_rank
-- ai_scoring_must_remain_reviewable
-- uncertainty_must_remain_visible
-- scores_may_not_trigger_automatic_execution
-- scores_may_not_calculate_compensation
-
-execution_boundary:
-automatic_execution: false
-automatic_compensation: false
-automatic_royalty_allocation: false
-legal_ownership_decision: false
-final_creator_ranking: false
-absolute_originality_scoring: false
-requires_human_review: true
-requires_governance_for_high_impact_cases: true
-
-human_review_requirement:
-required: true
-applies_when:
-- recommendation_affects_public_attribution
-- recommendation_affects_return_record
-- recommendation_affects_governance_status
-- recommendation_affects_public_record
-- recommendation_affects_reputation
-- recommendation_affects_future_return_pathway
-required_reviewer_roles:
-- maintainer
-- reviewer
-- external_verifier
-
-governance_requirement:
-requires_governance_record: true
-requires_score_provenance: true
-requires_score_review_status: true
-requires_contestability: true
-allows_score_challenge: true
-preserves_unresolved_cases: true
-
-score_provenance_required: true
-
-uncertainty_handling:
-allowed_states:
-- clear
-- uncertain
-- conflicting
-- unresolved
-- requires_review
-- requires_external_verification
-preserve_uncertainty: true
-allow_unresolved_status: true
-requires_reason_when_unresolved: true
-
-created_by: "Example Maintainer"
-created_at: "2026-06-05T00:00:00Z"
-updated_at: "2026-06-05T00:00:00Z"
-
-metadata:
-example_type: scoring_boundary
-boundary_notice:
-automatic_compensation: false
-legal_ownership_decision: false
-final_creator_ranking: false
-absolute_originality_score: false
-note: "This example allows scoring only for review support. It prohibits automatic value judgment, compensation, ownership scoring, and creator ranking."
+  status: passed
+  reviewed_by: "Example Maintainer"
+  reviewed_at: "2026-06-05T03:00:00Z"
+  notes: "The scoring boundary check passed. No prohibited scoring fields were used."
