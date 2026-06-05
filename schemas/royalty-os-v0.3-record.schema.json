@@ -1,0 +1,888 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://example.org/schemas/royalty-os-v0.3/royalty-os-v0.3-record.schema.json",
+"title": "Royalty OS v0.3 Integrated Record",
+"description": "Schema for validating an integrated Royalty OS v0.3 record. This record connects value graphs, policy evaluations, scoring boundaries, governance records, transformation provenance, and public action boundaries. It supports responsible review and does not execute compensation, determine legal ownership, rank creators, or make final value judgments automatically.",
+"type": "object",
+"required": [
+"royalty_os_v0_3_record"
+],
+"additionalProperties": false,
+"properties": {
+"royalty_os_v0_3_record": {
+"type": "object",
+"required": [
+"id",
+"version",
+"status",
+"core_statement",
+"operating_model",
+"value_graph",
+"policy_evaluation",
+"scoring_boundary_check",
+"governance",
+"execution_boundary"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"version": {
+"type": "string",
+"examples": [
+"0.3.0-draft"
+]
+},
+"status": {
+"$ref": "#/$defs/record_status"
+},
+"title": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"core_statement": {
+"type": "string",
+"description": "Core statement of Royalty OS v0.3."
+},
+"operating_model": {
+"type": "array",
+"description": "Operating model for v0.3.",
+"items": {
+"$ref": "#/$defs/operating_model_item"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"source": {
+"$ref": "#/$defs/source"
+},
+"transformation_record": {
+"$ref": "#/$defs/transformation_record"
+},
+"value_graph": {
+"$ref": "#/$defs/value_graph_summary"
+},
+"policy_evaluation": {
+"$ref": "#/$defs/policy_evaluation"
+},
+"scoring_boundary_check": {
+"$ref": "#/$defs/scoring_boundary_check"
+},
+"governance": {
+"$ref": "#/$defs/governance_summary"
+},
+"public_action_boundary": {
+"$ref": "#/$defs/public_action_boundary"
+},
+"return_record": {
+"$ref": "#/$defs/return_record_summary"
+},
+"execution_boundary": {
+"$ref": "#/$defs/execution_boundary"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"updated_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+},
+"$defs": {
+"id": {
+"type": "string",
+"minLength": 1,
+"maxLength": 128,
+"pattern": "^[A-Za-z0-9._:-]+$"
+},
+"date_time": {
+"type": "string",
+"format": "date-time"
+},
+"confidence": {
+"type": "number",
+"minimum": 0,
+"maximum": 1
+},
+"record_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending_review",
+"in_review",
+"reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived"
+]
+},
+"operating_model_item": {
+"type": "string",
+"enum": [
+"human_reviewed",
+"ai_assisted",
+"policy_guided"
+]
+},
+"source": {
+"type": "object",
+"description": "Source information for records imported from previous Royalty OS versions or compatible systems.",
+"additionalProperties": false,
+"properties": {
+"source_version": {
+"type": "string",
+"examples": [
+"0.2"
+]
+},
+"source_system": {
+"type": "string"
+},
+"source_uri": {
+"type": "string"
+},
+"source_event_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"source_record_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+}
+}
+},
+"transformation_record": {
+"type": "object",
+"description": "Record of transformation from v0.2 event logs or compatible input records into a v0.3 reviewable structure.",
+"required": [
+"id",
+"source_version",
+"target_version",
+"target_value_graph_id",
+"transformed_at"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"source_version": {
+"type": "string"
+},
+"target_version": {
+"type": "string",
+"examples": [
+"0.3.0-draft"
+]
+},
+"source_event_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"source_record_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"target_value_graph_id": {
+"$ref": "#/$defs/id"
+},
+"transformed_by": {
+"type": "string"
+},
+"reviewed_by": {
+"type": "string"
+},
+"transformed_at": {
+"$ref": "#/$defs/date_time"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"value_graph_summary": {
+"type": "object",
+"description": "Summary or reference to a Value Graph validated by value-graph.schema.json.",
+"required": [
+"id",
+"graph_status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"schema_ref": {
+"type": "string",
+"examples": [
+"schemas/value-graph.schema.json"
+]
+},
+"graph_status": {
+"$ref": "#/$defs/graph_status"
+},
+"origin_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"trace_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"reference_event_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"value_signal_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"evidence_record_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"review_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"summary": {
+"type": "string"
+}
+}
+},
+"graph_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending_review",
+"reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived"
+]
+},
+"policy_evaluation": {
+"type": "object",
+"description": "Policy evaluation summary. Detailed policy rules should be validated by policy-rule.schema.json.",
+"required": [
+"id",
+"mode",
+"applied_policy_rules",
+"recommendations",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"mode": {
+"type": "string",
+"enum": [
+"policy_guided_review"
+]
+},
+"schema_ref": {
+"type": "string",
+"examples": [
+"schemas/policy-rule.schema.json"
+]
+},
+"evaluated_by": {
+"type": "string"
+},
+"evaluated_at": {
+"$ref": "#/$defs/date_time"
+},
+"applied_policy_rules": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"input_summary": {
+"$ref": "#/$defs/policy_input_summary"
+},
+"recommendations": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/recommendation"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"status": {
+"$ref": "#/$defs/recommendation_status"
+},
+"requires_human_review": {
+"type": "boolean"
+},
+"requires_governance_review": {
+"type": "boolean"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"policy_input_summary": {
+"type": "object",
+"additionalProperties": false,
+"properties": {
+"signal_strength": {
+"$ref": "#/$defs/signal_strength"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"reference_depth": {
+"$ref": "#/$defs/reference_depth"
+},
+"review_status": {
+"$ref": "#/$defs/review_status"
+},
+"confidence": {
+"$ref": "#/$defs/confidence"
+},
+"priority": {
+"$ref": "#/$defs/priority"
+}
+}
+},
+"recommendation": {
+"type": "string",
+"enum": [
+"cite_origin",
+"add_linkback",
+"add_conceptual_attribution",
+"add_acknowledgment",
+"request_more_evidence",
+"request_human_review",
+"request_governance_review",
+"request_external_verification",
+"mark_as_unresolved",
+"mark_as_low_priority",
+"no_action_required"
+]
+},
+"recommendation_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending_human_review",
+"pending_governance_review",
+"approved",
+"rejected",
+"unresolved",
+"archived"
+]
+},
+"scoring_boundary_check": {
+"type": "object",
+"description": "Scoring boundary check. Detailed scoring boundary definitions should be validated by scoring-boundary.schema.json.",
+"required": [
+"id",
+"schema_ref",
+"purpose",
+"allowed_fields_used",
+"prohibited_fields_used",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"schema_ref": {
+"type": "string",
+"examples": [
+"schemas/scoring-boundary.schema.json"
+]
+},
+"purpose": {
+"type": "string",
+"enum": [
+"review_support_only"
+]
+},
+"allowed_fields_used": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/allowed_scoring_field"
+},
+"uniqueItems": true
+},
+"prohibited_fields_used": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/prohibited_scoring_field"
+},
+"maxItems": 0
+},
+"scores": {
+"$ref": "#/$defs/bounded_scores"
+},
+"status": {
+"type": "string",
+"enum": [
+"passed",
+"failed",
+"requires_review",
+"unresolved"
+]
+},
+"reviewed_by": {
+"type": "string"
+},
+"reviewed_at": {
+"$ref": "#/$defs/date_time"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"bounded_scores": {
+"type": "object",
+"description": "Scores allowed only for review support.",
+"additionalProperties": false,
+"properties": {
+"confidence": {
+"type": "object",
+"additionalProperties": false,
+"properties": {
+"relationship_confidence": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_confidence": {
+"$ref": "#/$defs/confidence"
+},
+"review_confidence": {
+"$ref": "#/$defs/confidence"
+}
+}
+},
+"review_score": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"reference_depth": {
+"$ref": "#/$defs/reference_depth"
+},
+"signal_strength": {
+"$ref": "#/$defs/signal_strength"
+},
+"priority": {
+"$ref": "#/$defs/priority"
+},
+"score_review_status": {
+"$ref": "#/$defs/score_review_status"
+},
+"uncertainty": {
+"$ref": "#/$defs/uncertainty_state"
+}
+}
+},
+"allowed_scoring_field": {
+"type": "string",
+"enum": [
+"confidence",
+"review_score",
+"evidence_quality",
+"reference_depth",
+"signal_strength",
+"priority"
+]
+},
+"prohibited_scoring_field": {
+"type": "string",
+"enum": [
+"automatic_money_value",
+"final_creator_rank",
+"legal_ownership_score",
+"absolute_originality_score",
+"automatic_compensation_score",
+"final_entitlement_score"
+]
+},
+"signal_strength": {
+"type": "string",
+"enum": [
+"none",
+"low",
+"medium",
+"high",
+"critical"
+]
+},
+"evidence_quality": {
+"type": "string",
+"enum": [
+"none",
+"weak",
+"partial",
+"sufficient",
+"strong",
+"verified"
+]
+},
+"reference_depth": {
+"type": "string",
+"enum": [
+"surface",
+"minor",
+"moderate",
+"deep",
+"structural"
+]
+},
+"review_status": {
+"type": "string",
+"enum": [
+"not_reviewed",
+"pending_review",
+"ai_assisted_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated"
+]
+},
+"priority": {
+"type": "string",
+"enum": [
+"low",
+"medium",
+"high",
+"urgent"
+]
+},
+"score_review_status": {
+"type": "string",
+"enum": [
+"draft",
+"ai_generated",
+"pending_human_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"archived"
+]
+},
+"uncertainty_state": {
+"type": "string",
+"enum": [
+"clear",
+"uncertain",
+"conflicting",
+"unresolved",
+"requires_review",
+"requires_external_verification"
+]
+},
+"governance_summary": {
+"type": "object",
+"description": "Governance summary. Detailed governance records should be validated by governance-record.schema.json.",
+"required": [
+"mode",
+"governance_record_ids",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"mode": {
+"type": "string",
+"enum": [
+"human_reviewed_ai_assisted_policy_guided"
+]
+},
+"schema_ref": {
+"type": "string",
+"examples": [
+"schemas/governance-record.schema.json"
+]
+},
+"governance_record_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"assigned_roles": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_role"
+},
+"uniqueItems": true
+},
+"actions": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_action"
+},
+"uniqueItems": true
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"requires_external_verification": {
+"type": "boolean"
+},
+"preserves_unresolved_cases": {
+"type": "boolean"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"governance_role": {
+"type": "string",
+"enum": [
+"originator",
+"maintainer",
+"reviewer",
+"ai_assistant",
+"community_reviewer",
+"external_verifier",
+"governance_steward",
+"dispute_reviewer",
+"observer"
+]
+},
+"governance_action": {
+"type": "string",
+"enum": [
+"approve",
+"reject",
+"request_more_evidence",
+"request_human_review",
+"request_external_verification",
+"mark_as_unresolved",
+"escalate",
+"archive",
+"revise",
+"challenge",
+"comment",
+"reopen"
+]
+},
+"governance_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending",
+"in_review",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived",
+"reopened",
+"completed"
+]
+},
+"public_action_boundary": {
+"type": "object",
+"description": "Boundary for any public action affecting attribution, public records, reputation, or future return pathways.",
+"required": [
+"requires_governance_review_for_public_action",
+"public_actions"
+],
+"additionalProperties": false,
+"properties": {
+"requires_governance_review_for_public_action": {
+"type": "boolean",
+"const": true
+},
+"public_actions": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/public_action"
+},
+"uniqueItems": true
+},
+"status": {
+"type": "string",
+"enum": [
+"not_applicable",
+"pending_review",
+"approved",
+"rejected",
+"unresolved"
+]
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"public_action": {
+"type": "string",
+"enum": [
+"adding_citation",
+"adding_linkback",
+"publishing_attribution",
+"updating_return_record",
+"marking_case_as_approved",
+"changing_public_status_of_value_relationship"
+]
+},
+"return_record_summary": {
+"type": "object",
+"description": "Optional summary of a return record. v0.3 supports non-financial or documentation-based return records only.",
+"required": [
+"id",
+"return_type",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"return_type": {
+"type": "string",
+"enum": [
+"citation_added",
+"linkback_added",
+"conceptual_attribution",
+"acknowledgment_recorded",
+"unresolved_status_recorded",
+"governance_escalation_recorded"
+]
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"target_id": {
+"$ref": "#/$defs/id"
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"recorded_at": {
+"$ref": "#/$defs/date_time"
+},
+"notes": {
+"type": "string"
+}
+}
+},
+"execution_boundary": {
+"type": "object",
+"description": "Required boundary ensuring that v0.3 remains a review-support architecture, not an automatic compensation or legal judgment system.",
+"required": [
+"automatic_execution",
+"automatic_compensation",
+"automatic_royalty_allocation",
+"legal_ownership_decision",
+"final_creator_ranking",
+"absolute_originality_scoring",
+"ai_final_decision"
+],
+"additionalProperties": false,
+"properties": {
+"automatic_execution": {
+"type": "boolean",
+"const": false
+},
+"automatic_compensation": {
+"type": "boolean",
+"const": false
+},
+"automatic_royalty_allocation": {
+"type": "boolean",
+"const": false
+},
+"legal_ownership_decision": {
+"type": "boolean",
+"const": false
+},
+"final_creator_ranking": {
+"type": "boolean",
+"const": false
+},
+"absolute_originality_scoring": {
+"type": "boolean",
+"const": false
+},
+"automatic_attribution_enforcement": {
+"type": "boolean",
+"const": false
+},
+"autonomous_dispute_resolution": {
+"type": "boolean",
+"const": false
+},
+"ai_final_decision": {
+"type": "boolean",
+"const": false
+},
+"requires_human_review_for_public_action": {
+"type": "boolean"
+},
+"requires_governance_record_for_approval": {
+"type": "boolean"
+},
+"preserves_unresolved_cases": {
+"type": "boolean"
+}
+}
+},
+"metadata": {
+"type": "object",
+"description": "Optional metadata. This object is intentionally flexible for early draft usage.",
+"additionalProperties": true
+}
+}
+}
