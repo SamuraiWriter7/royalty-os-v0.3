@@ -82,7 +82,7 @@ governance_record:
         change_type: "governance_approval_created"
         description: "Created governance approval for non-financial attribution recommendation."
 
-    - timestamp: "2026-06-05T04:30:00Z"
+     - timestamp: "2026-06-05T04:30:00Z"
       actor: "governance-steward-001"
       change_type: "boundary_audit_completed"
       description: "Confirmed that the governance record stays within Royalty OS v0.3 review-support boundaries."
