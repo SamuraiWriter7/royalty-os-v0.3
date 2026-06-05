@@ -1,0 +1,611 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://example.org/schemas/royalty-os-v0.3/policy-rule.schema.json",
+"title": "Royalty OS v0.3 Policy Rule",
+"description": "Schema for validating a Royalty OS v0.3 Policy Rule. A Policy Rule evaluates value graph relationships and generates reviewable recommendations. It must not execute compensation, determine legal ownership, rank creators, or make final value judgments automatically.",
+"type": "object",
+"required": [
+"policy_rule"
+],
+"additionalProperties": false,
+"properties": {
+"policy_rule": {
+"type": "object",
+"required": [
+"id",
+"name",
+"description",
+"conditions",
+"recommendations",
+"enforcement_level"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"version": {
+"type": "string",
+"description": "Specification or rule version.",
+"examples": [
+"0.3.0-draft"
+]
+},
+"name": {
+"type": "string",
+"minLength": 1
+},
+"description": {
+"type": "string",
+"minLength": 1
+},
+"scope": {
+"$ref": "#/$defs/policy_scope"
+},
+"conditions": {
+"$ref": "#/$defs/policy_conditions"
+},
+"recommendations": {
+"type": "array",
+"description": "Reviewable recommendations generated when the policy conditions are met.",
+"items": {
+"$ref": "#/$defs/recommendation"
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"required_evidence": {
+"$ref": "#/$defs/required_evidence"
+},
+"review_requirements": {
+"$ref": "#/$defs/review_requirements"
+},
+"governance_requirements": {
+"$ref": "#/$defs/governance_requirements"
+},
+"enforcement_level": {
+"$ref": "#/$defs/enforcement_level"
+},
+"execution_boundary": {
+"$ref": "#/$defs/execution_boundary"
+},
+"conflict_handling": {
+"$ref": "#/$defs/conflict_handling"
+},
+"created_by": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"updated_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+},
+"$defs": {
+"id": {
+"type": "string",
+"minLength": 1,
+"maxLength": 128,
+"pattern": "^[A-Za-z0-9._:-]+$"
+},
+"date_time": {
+"type": "string",
+"format": "date-time"
+},
+"confidence": {
+"type": "number",
+"minimum": 0,
+"maximum": 1
+},
+"signal_strength": {
+"type": "string",
+"enum": [
+"none",
+"low",
+"medium",
+"high",
+"critical"
+]
+},
+"evidence_quality": {
+"type": "string",
+"enum": [
+"none",
+"weak",
+"partial",
+"sufficient",
+"strong",
+"verified"
+]
+},
+"review_status": {
+"type": "string",
+"enum": [
+"not_reviewed",
+"pending_review",
+"ai_assisted_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated"
+]
+},
+"reference_depth": {
+"type": "string",
+"enum": [
+"surface",
+"minor",
+"moderate",
+"deep",
+"structural"
+]
+},
+"priority": {
+"type": "string",
+"enum": [
+"low",
+"medium",
+"high",
+"urgent"
+]
+},
+"governance_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending",
+"in_review",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived",
+"reopened",
+"completed"
+]
+},
+"dispute_status": {
+"type": "string",
+"enum": [
+"none",
+"open",
+"challenge_allowed",
+"challenge_submitted",
+"under_reconsideration",
+"closed",
+"archived"
+]
+},
+"policy_scope": {
+"type": "object",
+"description": "Defines where this policy rule applies.",
+"additionalProperties": false,
+"properties": {
+"applies_to": {
+"type": "array",
+"items": {
+"type": "string",
+"enum": [
+"ValueGraph",
+"Origin",
+"Trace",
+"ReferenceEvent",
+"ValueSignal",
+"EvidenceRecord",
+"Review",
+"PolicyRecommendation",
+"AllocationDecision",
+"ReturnRecord",
+"GovernanceRecord"
+]
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"origin_types": {
+"type": "array",
+"items": {
+"type": "string"
+},
+"uniqueItems": true
+},
+"trace_types": {
+"type": "array",
+"items": {
+"type": "string"
+},
+"uniqueItems": true
+},
+"reference_types": {
+"type": "array",
+"items": {
+"type": "string"
+},
+"uniqueItems": true
+},
+"signal_types": {
+"type": "array",
+"items": {
+"type": "string"
+},
+"uniqueItems": true
+}
+}
+},
+"policy_conditions": {
+"type": "object",
+"description": "Conditions that must be satisfied before the policy rule may generate recommendations.",
+"additionalProperties": false,
+"minProperties": 1,
+"properties": {
+"signal_strength": {
+"$ref": "#/$defs/signal_strength_condition"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality_condition"
+},
+"review_status": {
+"$ref": "#/$defs/review_status_condition"
+},
+"reference_depth": {
+"$ref": "#/$defs/reference_depth_condition"
+},
+"priority": {
+"$ref": "#/$defs/priority_condition"
+},
+"governance_status": {
+"$ref": "#/$defs/governance_status_condition"
+},
+"dispute_status": {
+"$ref": "#/$defs/dispute_status_condition"
+},
+"confidence_min": {
+"$ref": "#/$defs/confidence"
+},
+"confidence_max": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_count_min": {
+"type": "integer",
+"minimum": 0
+},
+"requires_human_review": {
+"type": "boolean"
+},
+"requires_external_verification": {
+"type": "boolean"
+},
+"requires_governance_review": {
+"type": "boolean"
+},
+"custom_conditions": {
+"type": "object",
+"description": "Optional custom conditions for experimental or implementation-specific use.",
+"additionalProperties": true
+}
+}
+},
+"signal_strength_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/signal_strength"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/signal_strength"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"evidence_quality_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/evidence_quality"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/evidence_quality"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"review_status_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/review_status"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/review_status"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"reference_depth_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/reference_depth"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/reference_depth"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"priority_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/priority"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/priority"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"governance_status_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/governance_status"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_status"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"dispute_status_condition": {
+"oneOf": [
+{
+"$ref": "#/$defs/dispute_status"
+},
+{
+"type": "array",
+"items": {
+"$ref": "#/$defs/dispute_status"
+},
+"minItems": 1,
+"uniqueItems": true
+}
+]
+},
+"recommendation": {
+"type": "string",
+"enum": [
+"cite_origin",
+"add_linkback",
+"add_conceptual_attribution",
+"add_acknowledgment",
+"request_more_evidence",
+"request_human_review",
+"request_governance_review",
+"request_external_verification",
+"mark_as_unresolved",
+"mark_as_low_priority",
+"no_action_required"
+]
+},
+"required_evidence": {
+"type": "object",
+"description": "Evidence requirements for this policy rule.",
+"additionalProperties": false,
+"properties": {
+"minimum_evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"minimum_evidence_count": {
+"type": "integer",
+"minimum": 0
+},
+"accepted_evidence_types": {
+"type": "array",
+"items": {
+"type": "string"
+},
+"uniqueItems": true
+},
+"requires_evidence_record": {
+"type": "boolean"
+},
+"requires_source_uri": {
+"type": "boolean"
+},
+"requires_review_notes": {
+"type": "boolean"
+}
+}
+},
+"review_requirements": {
+"type": "object",
+"description": "Review requirements before a recommendation can be accepted or acted upon.",
+"additionalProperties": false,
+"properties": {
+"requires_human_review": {
+"type": "boolean"
+},
+"requires_ai_assisted_review": {
+"type": "boolean"
+},
+"required_reviewer_roles": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_role"
+},
+"uniqueItems": true
+},
+"minimum_review_status": {
+"$ref": "#/$defs/review_status"
+},
+"requires_review_notes": {
+"type": "boolean"
+}
+}
+},
+"governance_requirements": {
+"type": "object",
+"description": "Governance requirements generated or required by the policy rule.",
+"additionalProperties": false,
+"properties": {
+"requires_governance_record": {
+"type": "boolean"
+},
+"requires_governance_review": {
+"type": "boolean"
+},
+"requires_external_verifier": {
+"type": "boolean"
+},
+"allows_external_verifier": {
+"type": "boolean"
+},
+"requires_dispute_review_if_challenged": {
+"type": "boolean"
+},
+"creates_governance_task": {
+"type": "boolean"
+},
+"governance_task_type": {
+"$ref": "#/$defs/governance_task_type"
+}
+}
+},
+"governance_role": {
+"type": "string",
+"enum": [
+"originator",
+"maintainer",
+"reviewer",
+"ai_assistant",
+"community_reviewer",
+"external_verifier",
+"governance_steward",
+"dispute_reviewer",
+"observer"
+]
+},
+"governance_task_type": {
+"type": "string",
+"enum": [
+"human_review_required",
+"external_verification_required",
+"dispute_review_required",
+"evidence_review_required",
+"policy_exception_review",
+"unresolved_case_review",
+"score_review_required",
+"public_attribution_review"
+]
+},
+"enforcement_level": {
+"type": "string",
+"description": "The enforcement level must remain conservative in v0.3.",
+"enum": [
+"recommendation_only",
+"requires_human_review",
+"requires_governance_review",
+"no_automatic_execution"
+]
+},
+"execution_boundary": {
+"type": "object",
+"description": "Explicit boundary preventing automatic execution or unsafe value judgment.",
+"additionalProperties": false,
+"properties": {
+"automatic_execution": {
+"type": "boolean",
+"const": false
+},
+"automatic_compensation": {
+"type": "boolean",
+"const": false
+},
+"automatic_royalty_allocation": {
+"type": "boolean",
+"const": false
+},
+"legal_ownership_decision": {
+"type": "boolean",
+"const": false
+},
+"final_creator_ranking": {
+"type": "boolean",
+"const": false
+},
+"absolute_originality_scoring": {
+"type": "boolean",
+"const": false
+},
+"requires_human_review_for_public_action": {
+"type": "boolean"
+}
+}
+},
+"conflict_handling": {
+"type": "object",
+"description": "How this policy should behave when conflicting rules or uncertain evidence appear.",
+"additionalProperties": false,
+"properties": {
+"on_conflict": {
+"type": "string",
+"enum": [
+"request_governance_review",
+"request_human_review",
+"request_more_evidence",
+"mark_as_unresolved"
+]
+},
+"priority_order": {
+"type": "array",
+"items": {
+"type": "string",
+"enum": [
+"governance_review",
+"human_review",
+"request_more_evidence",
+"mark_as_unresolved",
+"attribution_recommendation",
+"no_action_required"
+]
+},
+"uniqueItems": true
+},
+"preserve_unresolved_case": {
+"type": "boolean"
+}
+}
+},
+"metadata": {
+"type": "object",
+"description": "Optional metadata. This object is intentionally flexible for early draft usage.",
+"additionalProperties": true
+}
+}
+}
