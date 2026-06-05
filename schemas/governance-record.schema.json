@@ -1,0 +1,569 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://example.org/schemas/royalty-os-v0.3/governance-record.schema.json",
+"title": "Royalty OS v0.3 Governance Record",
+"description": "Schema for validating a Royalty OS v0.3 Governance Record. A Governance Record documents responsibility, review, approval, rejection, escalation, dispute handling, and accountability for value relationships. It does not determine legal ownership, execute compensation, or finalize creator ranking.",
+"type": "object",
+"required": [
+"governance_record"
+],
+"additionalProperties": false,
+"properties": {
+"governance_record": {
+"type": "object",
+"required": [
+"id",
+"version",
+"related",
+"actor",
+"action",
+"status",
+"boundary_check",
+"timestamp"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"version": {
+"type": "string",
+"examples": [
+"0.3.0-draft"
+]
+},
+"related": {
+"$ref": "#/$defs/related_objects"
+},
+"actor": {
+"$ref": "#/$defs/actor"
+},
+"action": {
+"$ref": "#/$defs/governance_action"
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"decision_scope": {
+"$ref": "#/$defs/decision_scope"
+},
+"review_basis": {
+"$ref": "#/$defs/review_basis"
+},
+"boundary_check": {
+"$ref": "#/$defs/boundary_check"
+},
+"reason": {
+"type": "string",
+"description": "Human-readable explanation for the governance action."
+},
+"notes": {
+"type": "string"
+},
+"timestamp": {
+"$ref": "#/$defs/date_time"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"updated_at": {
+"$ref": "#/$defs/date_time"
+},
+"contestability": {
+"$ref": "#/$defs/contestability"
+},
+"dispute": {
+"$ref": "#/$defs/dispute"
+},
+"escalation": {
+"$ref": "#/$defs/escalation"
+},
+"audit": {
+"$ref": "#/$defs/audit"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+},
+"$defs": {
+"id": {
+"type": "string",
+"minLength": 1,
+"maxLength": 128,
+"pattern": "^[A-Za-z0-9._:-]+$"
+},
+"date_time": {
+"type": "string",
+"format": "date-time"
+},
+"confidence": {
+"type": "number",
+"minimum": 0,
+"maximum": 1
+},
+"related_objects": {
+"type": "object",
+"description": "Objects related to this governance record.",
+"additionalProperties": false,
+"properties": {
+"value_graph_id": {
+"$ref": "#/$defs/id"
+},
+"policy_recommendation_id": {
+"$ref": "#/$defs/id"
+},
+"policy_rule_id": {
+"$ref": "#/$defs/id"
+},
+"scoring_boundary_id": {
+"$ref": "#/$defs/id"
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"trace_id": {
+"$ref": "#/$defs/id"
+},
+"reference_event_id": {
+"$ref": "#/$defs/id"
+},
+"value_signal_id": {
+"$ref": "#/$defs/id"
+},
+"evidence_record_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"review_id": {
+"$ref": "#/$defs/id"
+},
+"return_record_id": {
+"$ref": "#/$defs/id"
+},
+"source_event_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+}
+},
+"minProperties": 1
+},
+"actor": {
+"type": "object",
+"description": "The actor responsible for the governance action.",
+"required": [
+"role"
+],
+"additionalProperties": false,
+"properties": {
+"role": {
+"$ref": "#/$defs/governance_role"
+},
+"id": {
+"type": "string"
+},
+"name": {
+"type": "string"
+},
+"affiliation": {
+"type": "string"
+},
+"is_ai_assisted": {
+"type": "boolean"
+}
+}
+},
+"governance_role": {
+"type": "string",
+"enum": [
+"originator",
+"maintainer",
+"reviewer",
+"ai_assistant",
+"community_reviewer",
+"external_verifier",
+"governance_steward",
+"dispute_reviewer",
+"observer"
+]
+},
+"governance_action": {
+"type": "string",
+"enum": [
+"approve",
+"reject",
+"request_more_evidence",
+"request_human_review",
+"request_external_verification",
+"mark_as_unresolved",
+"escalate",
+"archive",
+"revise",
+"challenge",
+"comment",
+"reopen"
+]
+},
+"governance_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending",
+"in_review",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived",
+"reopened",
+"completed"
+]
+},
+"decision_scope": {
+"type": "array",
+"description": "Scope of the governance decision. Approval of one scope must not imply approval of compensation, ownership, or ranking.",
+"items": {
+"$ref": "#/$defs/decision_scope_item"
+},
+"uniqueItems": true
+},
+"decision_scope_item": {
+"type": "string",
+"enum": [
+"add_citation",
+"add_linkback",
+"add_conceptual_attribution",
+"add_acknowledgment",
+"request_more_evidence",
+"request_human_review",
+"request_governance_review",
+"request_external_verification",
+"mark_as_unresolved",
+"archive_case",
+"revise_record",
+"update_return_record",
+"no_action_required"
+]
+},
+"review_basis": {
+"type": "object",
+"description": "Basis used for the governance action.",
+"additionalProperties": false,
+"properties": {
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"signal_strength": {
+"$ref": "#/$defs/signal_strength"
+},
+"reference_depth": {
+"$ref": "#/$defs/reference_depth"
+},
+"review_status": {
+"$ref": "#/$defs/review_status"
+},
+"confidence": {
+"$ref": "#/$defs/confidence"
+},
+"review_score": {
+"$ref": "#/$defs/confidence"
+},
+"priority": {
+"$ref": "#/$defs/priority"
+},
+"summary": {
+"type": "string"
+}
+}
+},
+"evidence_quality": {
+"type": "string",
+"enum": [
+"none",
+"weak",
+"partial",
+"sufficient",
+"strong",
+"verified"
+]
+},
+"signal_strength": {
+"type": "string",
+"enum": [
+"none",
+"low",
+"medium",
+"high",
+"critical"
+]
+},
+"reference_depth": {
+"type": "string",
+"enum": [
+"surface",
+"minor",
+"moderate",
+"deep",
+"structural"
+]
+},
+"review_status": {
+"type": "string",
+"enum": [
+"not_reviewed",
+"pending_review",
+"ai_assisted_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated"
+]
+},
+"priority": {
+"type": "string",
+"enum": [
+"low",
+"medium",
+"high",
+"urgent"
+]
+},
+"boundary_check": {
+"type": "object",
+"description": "Required boundary check ensuring this governance record does not cross into unsafe automatic judgment.",
+"required": [
+"automatic_compensation",
+"legal_ownership_decision",
+"final_creator_ranking",
+"absolute_originality_score",
+"automatic_attribution_enforcement",
+"ai_final_decision"
+],
+"additionalProperties": false,
+"properties": {
+"automatic_compensation": {
+"type": "boolean",
+"const": false
+},
+"automatic_royalty_allocation": {
+"type": "boolean",
+"const": false
+},
+"legal_ownership_decision": {
+"type": "boolean",
+"const": false
+},
+"final_creator_ranking": {
+"type": "boolean",
+"const": false
+},
+"absolute_originality_score": {
+"type": "boolean",
+"const": false
+},
+"automatic_attribution_enforcement": {
+"type": "boolean",
+"const": false
+},
+"autonomous_dispute_resolution": {
+"type": "boolean",
+"const": false
+},
+"ai_final_decision": {
+"type": "boolean",
+"const": false
+},
+"requires_human_review_for_public_action": {
+"type": "boolean"
+},
+"requires_governance_record_for_approval": {
+"type": "boolean"
+},
+"preserves_unresolved_cases": {
+"type": "boolean"
+}
+}
+},
+"contestability": {
+"type": "object",
+"description": "Contestability state for the governance outcome.",
+"additionalProperties": false,
+"properties": {
+"state": {
+"$ref": "#/$defs/contestability_state"
+},
+"challenge_allowed": {
+"type": "boolean"
+},
+"challenge_deadline": {
+"$ref": "#/$defs/date_time"
+},
+"challenge_notes": {
+"type": "string"
+}
+}
+},
+"contestability_state": {
+"type": "string",
+"enum": [
+"open",
+"challenge_allowed",
+"challenge_submitted",
+"under_reconsideration",
+"closed",
+"archived"
+]
+},
+"dispute": {
+"type": "object",
+"description": "Optional dispute information associated with this governance record.",
+"required": [
+"dispute_type",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"dispute_type": {
+"$ref": "#/$defs/dispute_type"
+},
+"disputed_by": {
+"$ref": "#/$defs/actor"
+},
+"description": {
+"type": "string"
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"resolved_at": {
+"$ref": "#/$defs/date_time"
+}
+}
+},
+"dispute_type": {
+"type": "string",
+"enum": [
+"incorrect_attribution",
+"missing_attribution",
+"insufficient_evidence",
+"wrong_origin",
+"policy_misapplication",
+"score_disagreement",
+"governance_process_issue"
+]
+},
+"escalation": {
+"type": "object",
+"description": "Optional escalation information associated with this governance record.",
+"required": [
+"escalation_type",
+"assigned_role",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"escalation_type": {
+"$ref": "#/$defs/escalation_type"
+},
+"assigned_role": {
+"$ref": "#/$defs/governance_role"
+},
+"reason": {
+"type": "string"
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"resolved_at": {
+"$ref": "#/$defs/date_time"
+}
+}
+},
+"escalation_type": {
+"type": "string",
+"enum": [
+"human_review_required",
+"external_verification_required",
+"dispute_review_required",
+"evidence_review_required",
+"policy_exception_review",
+"unresolved_case_review",
+"score_review_required",
+"public_attribution_review"
+]
+},
+"audit": {
+"type": "object",
+"description": "Audit metadata for transparency and accountability.",
+"additionalProperties": false,
+"properties": {
+"audit_required": {
+"type": "boolean"
+},
+"audited_by": {
+"type": "string"
+},
+"audited_at": {
+"$ref": "#/$defs/date_time"
+},
+"audit_notes": {
+"type": "string"
+},
+"change_log": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/audit_change"
+}
+}
+}
+},
+"audit_change": {
+"type": "object",
+"required": [
+"timestamp",
+"actor",
+"change_type"
+],
+"additionalProperties": false,
+"properties": {
+"timestamp": {
+"$ref": "#/$defs/date_time"
+},
+"actor": {
+"type": "string"
+},
+"change_type": {
+"type": "string"
+},
+"description": {
+"type": "string"
+}
+}
+},
+"metadata": {
+"type": "object",
+"description": "Optional metadata. This object is intentionally flexible for early draft usage.",
+"additionalProperties": true
+}
+}
+}
