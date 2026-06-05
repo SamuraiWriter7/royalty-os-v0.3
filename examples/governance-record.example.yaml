@@ -1,0 +1,104 @@
+governance_record:
+id: governance-001
+version: "0.3.0-draft"
+
+related:
+value_graph_id: value-graph-001
+policy_recommendation_id: recommendation-001
+policy_rule_id: policy-high-signal-attribution
+scoring_boundary_id: scoring-boundary-001
+origin_id: origin-001
+trace_id: trace-001
+reference_event_id: ref-001
+value_signal_id: signal-001
+evidence_record_ids:
+- evidence-001
+review_id: review-001
+return_record_id: return-001
+source_event_ids:
+- event-001
+- event-002
+- event-003
+
+actor:
+role: maintainer
+id: maintainer-001
+name: "Example Maintainer"
+affiliation: "Example Project"
+is_ai_assisted: true
+
+action: approve
+status: approved
+
+decision_scope:
+- add_linkback
+- add_conceptual_attribution
+- update_return_record
+
+review_basis:
+evidence_quality: sufficient
+signal_strength: high
+reference_depth: deep
+review_status: human_reviewed
+confidence: 0.82
+review_score: 0.78
+priority: high
+summary: "The value relationship is sufficiently supported for non-financial attribution review. This approval does not determine ownership, compensation, or creator ranking."
+
+boundary_check:
+automatic_compensation: false
+automatic_royalty_allocation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_score: false
+automatic_attribution_enforcement: false
+autonomous_dispute_resolution: false
+ai_final_decision: false
+requires_human_review_for_public_action: true
+requires_governance_record_for_approval: true
+preserves_unresolved_cases: true
+
+reason: "The policy recommendation remains within the Royalty OS v0.3 boundary. It approves only citation, linkback, and conceptual attribution as reviewable non-financial return actions."
+notes: "This governance record does not approve compensation, legal ownership, originality ranking, or automatic enforcement."
+
+timestamp: "2026-06-05T04:00:00Z"
+created_at: "2026-06-05T04:00:00Z"
+updated_at: "2026-06-05T04:00:00Z"
+
+contestability:
+state: challenge_allowed
+challenge_allowed: true
+challenge_deadline: "2026-07-05T04:00:00Z"
+challenge_notes: "The governance outcome may be challenged if new evidence, incorrect attribution, or policy misapplication is identified."
+
+audit:
+audit_required: true
+audited_by: "Example Governance Steward"
+audited_at: "2026-06-05T04:30:00Z"
+audit_notes: "Boundary check passed. No automatic compensation, legal ownership decision, creator ranking, or AI final decision is present."
+change_log:
+- timestamp: "2026-06-05T04:00:00Z"
+actor: "maintainer-001"
+change_type: "governance_approval_created"
+description: "Created governance approval for non-financial attribution recommendation."
+
+```
+  - timestamp: "2026-06-05T04:30:00Z"
+    actor: "governance-steward-001"
+    change_type: "boundary_audit_completed"
+    description: "Confirmed that the governance record stays within Royalty OS v0.3 review-support boundaries."
+```
+
+metadata:
+example_type: governance_record
+operating_model:
+- human_reviewed
+- ai_assisted
+- policy_guided
+boundary_notice:
+automatic_compensation: false
+legal_ownership_decision: false
+final_creator_ranking: false
+absolute_originality_score: false
+ai_final_decision: false
+note: "This example records responsibility for a reviewable attribution decision. It does not execute compensation or determine ownership."
