@@ -1,0 +1,869 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://example.org/schemas/royalty-os-v0.3/value-graph.schema.json",
+"title": "Royalty OS v0.3 Value Graph",
+"description": "Schema for validating a Royalty OS v0.3 Value Graph. The Value Graph maps relationships between origins, traces, reference events, value signals, evidence, reviews, policy recommendations, governance records, allocation decisions, and return records. It supports review and governance, not automatic value judgment.",
+"type": "object",
+"required": [
+"value_graph"
+],
+"additionalProperties": false,
+"properties": {
+"value_graph": {
+"type": "object",
+"required": [
+"id",
+"version",
+"graph_status",
+"nodes",
+"edges"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"version": {
+"type": "string",
+"description": "Specification version used by this Value Graph.",
+"examples": [
+"0.3.0-draft"
+]
+},
+"title": {
+"type": "string",
+"description": "Optional human-readable title for the graph."
+},
+"description": {
+"type": "string",
+"description": "Optional description of the graph."
+},
+"graph_status": {
+"$ref": "#/$defs/graph_status"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"updated_at": {
+"$ref": "#/$defs/date_time"
+},
+"source": {
+"type": "object",
+"description": "Optional source information when the graph was transformed from v0.2 event logs.",
+"additionalProperties": false,
+"properties": {
+"source_version": {
+"type": "string"
+},
+"source_event_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"source_uri": {
+"type": "string"
+},
+"transformed_at": {
+"$ref": "#/$defs/date_time"
+},
+"transformed_by": {
+"type": "string"
+}
+}
+},
+"nodes": {
+"type": "object",
+"description": "Grouped graph nodes.",
+"additionalProperties": false,
+"properties": {
+"origins": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/origin_node"
+}
+},
+"traces": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/trace_node"
+}
+},
+"reference_events": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/reference_event_node"
+}
+},
+"value_signals": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/value_signal_node"
+}
+},
+"evidence_records": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/evidence_record_node"
+}
+},
+"reviews": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/review_node"
+}
+},
+"policy_recommendations": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/policy_recommendation_node"
+}
+},
+"allocation_decisions": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/allocation_decision_node"
+}
+},
+"return_records": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/return_record_node"
+}
+},
+"governance_records": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/governance_record_node"
+}
+}
+},
+"minProperties": 1
+},
+"edges": {
+"type": "array",
+"description": "Directed relationships between graph nodes.",
+"items": {
+"$ref": "#/$defs/edge"
+},
+"minItems": 1
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+},
+"$defs": {
+"id": {
+"type": "string",
+"minLength": 1,
+"maxLength": 128,
+"pattern": "^[A-Za-z0-9._:-]+$"
+},
+"date_time": {
+"type": "string",
+"format": "date-time"
+},
+"uri": {
+"type": "string",
+"format": "uri"
+},
+"confidence": {
+"type": "number",
+"minimum": 0,
+"maximum": 1
+},
+"graph_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending_review",
+"reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived"
+]
+},
+"signal_strength": {
+"type": "string",
+"enum": [
+"none",
+"low",
+"medium",
+"high",
+"critical"
+]
+},
+"evidence_quality": {
+"type": "string",
+"enum": [
+"none",
+"weak",
+"partial",
+"sufficient",
+"strong",
+"verified"
+]
+},
+"review_status": {
+"type": "string",
+"enum": [
+"not_reviewed",
+"pending_review",
+"ai_assisted_review",
+"human_reviewed",
+"approved",
+"rejected",
+"unresolved",
+"escalated"
+]
+},
+"recommendation_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending_human_review",
+"pending_governance_review",
+"approved",
+"rejected",
+"unresolved",
+"archived"
+]
+},
+"governance_status": {
+"type": "string",
+"enum": [
+"draft",
+"pending",
+"in_review",
+"approved",
+"rejected",
+"unresolved",
+"escalated",
+"archived",
+"reopened",
+"completed"
+]
+},
+"node_common": {
+"type": "object",
+"required": [
+"id"
+],
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"label": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+},
+"origin_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"type"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"type": {
+"type": "string",
+"description": "Type of origin, such as article, book, repository, protocol, dataset, design_document, question, or conversation_record."
+},
+"title": {
+"type": "string"
+},
+"creator": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"uri": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"trace_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"origin_id",
+"type"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"type": {
+"type": "string",
+"description": "Type of trace, such as phrase, concept, structure, pattern, terminology, design_logic, or citation_marker."
+},
+"label": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"reference_event_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"target_id",
+"reference_type"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"trace_id": {
+"$ref": "#/$defs/id"
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"target_id": {
+"$ref": "#/$defs/id"
+},
+"target_uri": {
+"type": "string"
+},
+"reference_type": {
+"type": "string",
+"description": "Type of reference, such as direct_citation, linkback, conceptual_influence, derived_implementation, transformed_idea, or summarized_concept."
+},
+"detected_by": {
+"type": "string"
+},
+"detected_at": {
+"$ref": "#/$defs/date_time"
+},
+"description": {
+"type": "string"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+},
+"anyOf": [
+{
+"required": [
+"trace_id"
+]
+},
+{
+"required": [
+"origin_id"
+]
+}
+]
+}
+]
+},
+"value_signal_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"signal_type",
+"signal_strength"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"reference_event_id": {
+"$ref": "#/$defs/id"
+},
+"trace_id": {
+"$ref": "#/$defs/id"
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"signal_type": {
+"type": "string"
+},
+"signal_strength": {
+"$ref": "#/$defs/signal_strength"
+},
+"confidence": {
+"$ref": "#/$defs/confidence"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"description": {
+"type": "string"
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"evidence_record_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"evidence_type"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"evidence_type": {
+"type": "string"
+},
+"uri": {
+"type": "string"
+},
+"summary": {
+"type": "string"
+},
+"evidence_quality": {
+"$ref": "#/$defs/evidence_quality"
+},
+"related_node_ids": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/id"
+},
+"uniqueItems": true
+},
+"created_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"review_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"reviewer_role",
+"review_status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"reviewer_role": {
+"type": "string"
+},
+"reviewer_id": {
+"type": "string"
+},
+"review_status": {
+"$ref": "#/$defs/review_status"
+},
+"review_score": {
+"$ref": "#/$defs/confidence"
+},
+"notes": {
+"type": "string"
+},
+"reviewed_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"policy_recommendation_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"policy_rule_id",
+"recommendation",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"policy_rule_id": {
+"$ref": "#/$defs/id"
+},
+"value_graph_id": {
+"$ref": "#/$defs/id"
+},
+"applies_to": {
+"type": "object",
+"additionalProperties": false,
+"properties": {
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"trace_id": {
+"$ref": "#/$defs/id"
+},
+"reference_event_id": {
+"$ref": "#/$defs/id"
+},
+"value_signal_id": {
+"$ref": "#/$defs/id"
+},
+"evidence_record_id": {
+"$ref": "#/$defs/id"
+},
+"review_id": {
+"$ref": "#/$defs/id"
+}
+},
+"minProperties": 1
+},
+"recommendation": {
+"type": "array",
+"items": {
+"type": "string",
+"enum": [
+"cite_origin",
+"add_linkback",
+"add_conceptual_attribution",
+"add_acknowledgment",
+"request_more_evidence",
+"request_human_review",
+"request_governance_review",
+"request_external_verification",
+"mark_as_unresolved",
+"mark_as_low_priority",
+"no_action_required"
+]
+},
+"minItems": 1,
+"uniqueItems": true
+},
+"status": {
+"$ref": "#/$defs/recommendation_status"
+},
+"generated_by": {
+"type": "string"
+},
+"generated_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"allocation_decision_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"decision_type",
+"decision_status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"decision_type": {
+"type": "string",
+"enum": [
+"attribution_recommended",
+"citation_recommended",
+"linkback_recommended",
+"governance_review_required",
+"unresolved",
+"no_return_required"
+]
+},
+"decided_by": {
+"type": "string"
+},
+"decision_status": {
+"$ref": "#/$defs/governance_status"
+},
+"notes": {
+"type": "string"
+},
+"decided_at": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"return_record_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"return_type",
+"origin_id"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"return_type": {
+"type": "string",
+"enum": [
+"citation_added",
+"linkback_added",
+"conceptual_attribution",
+"acknowledgment_recorded",
+"unresolved_status_recorded",
+"governance_escalation_recorded"
+]
+},
+"target_id": {
+"$ref": "#/$defs/id"
+},
+"origin_id": {
+"$ref": "#/$defs/id"
+},
+"recorded_at": {
+"$ref": "#/$defs/date_time"
+},
+"notes": {
+"type": "string"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"governance_record_node": {
+"allOf": [
+{
+"$ref": "#/$defs/node_common"
+},
+{
+"type": "object",
+"required": [
+"id",
+"actor",
+"action",
+"status"
+],
+"additionalProperties": false,
+"properties": {
+"id": {
+"$ref": "#/$defs/id"
+},
+"related_value_graph_id": {
+"$ref": "#/$defs/id"
+},
+"related_recommendation_id": {
+"$ref": "#/$defs/id"
+},
+"actor": {
+"type": "object",
+"required": [
+"role"
+],
+"additionalProperties": false,
+"properties": {
+"role": {
+"type": "string",
+"enum": [
+"originator",
+"maintainer",
+"reviewer",
+"ai_assistant",
+"community_reviewer",
+"external_verifier",
+"governance_steward",
+"dispute_reviewer",
+"observer"
+]
+},
+"id": {
+"type": "string"
+}
+}
+},
+"action": {
+"type": "string",
+"enum": [
+"approve",
+"reject",
+"request_more_evidence",
+"request_human_review",
+"request_external_verification",
+"mark_as_unresolved",
+"escalate",
+"archive",
+"revise",
+"challenge",
+"comment",
+"reopen"
+]
+},
+"status": {
+"$ref": "#/$defs/governance_status"
+},
+"reason": {
+"type": "string"
+},
+"timestamp": {
+"$ref": "#/$defs/date_time"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+}
+]
+},
+"edge": {
+"type": "object",
+"required": [
+"from",
+"to",
+"type"
+],
+"additionalProperties": false,
+"properties": {
+"from": {
+"$ref": "#/$defs/id"
+},
+"to": {
+"$ref": "#/$defs/id"
+},
+"type": {
+"type": "string",
+"enum": [
+"originates_from",
+"contains_trace",
+"references",
+"referenced_by",
+"generates_signal",
+"supported_by",
+"reviewed_by",
+"evaluated_under",
+"recommends",
+"decided_by",
+"returns_to",
+"escalated_to",
+"recorded_as"
+]
+},
+"description": {
+"type": "string"
+},
+"confidence": {
+"$ref": "#/$defs/confidence"
+},
+"metadata": {
+"$ref": "#/$defs/metadata"
+}
+}
+},
+"metadata": {
+"type": "object",
+"description": "Optional metadata. This object is intentionally flexible for early draft usage.",
+"additionalProperties": true
+}
+}
+}
